@@ -4,21 +4,19 @@ var router = express.Router();
 
 router.post('/', function(req, res, next) {
   var db = req.db;
-  var title = req.body.booktitle;
-  var author = req.body.bookauthor;
-
   var collection = db.get('bookcollection');
 
   collection.insert({
-      "title" : title,
-      "author" : author
+      "title" : req.body.title,
+      "author" : req.body.author
   }, function (err, doc) {
       if (err) {
           res.send("There was a problem adding the information to the database.");
       }
       else {
-          res.redirect("/books");
-      }
+          res.statusCode = 200
+          res.send({});
+        }
   });
 });
 
@@ -31,11 +29,29 @@ router.delete('/', function(req, res, next) {
         res.statusCode = 403;
         res.send(err);
     } else {
+        res.statusCode = 200;
         res.send({});
     }
   });
 });
 
+router.put('/:book_id', function(req, res, next) {
+  var db = req.db;
+  var collection = db.get('bookcollection');
+  var book_id = req.params.book_id
+
+  collection.update({"_id" : book_id}, {"title" : req.body.title, "author" : req.body.author},
+                    function(err, result) {
+                      if (err) {
+                        res.statusCode = 500
+                        res.send("There was a problem adding the information to the database.");
+                      }
+                      else {
+                        res.statusCode = 200
+                        res.send({});
+                      }
+  });
+});
 
 router.get('/:book_id', function(req, res, next) {
   var db = req.db;
@@ -43,6 +59,7 @@ router.get('/:book_id', function(req, res, next) {
   var book_id = req.params.book_id
   collection.findOne({"_id" : book_id},{},function(err ,docs){
     if (err) {
+      res.statusCode = 500
       res.send("There was a problem adding the information to the database.");
     }
     else {
@@ -59,6 +76,7 @@ router.get('/', function(req, res) {
     var collection = db.get('bookcollection');
     collection.find({},{},function(err, docs){
       if (err) {
+          res.statusCode = 500
           res.send("There was a problem adding the information to the database.");
       }
       else {

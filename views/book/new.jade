@@ -1,9 +1,11 @@
 extends ../layout
 
 block content
+    script(src='/javascripts/books.js')
+
     h1= title
     form#formAddBook(name="addbook",method="post",action="/books")
-        input#inputBookTitle(type="text", placeholder="book title", name="booktitle")
-        input#inputBookAuthor(type="text", placeholder="book author", name="bookauthor")
-        button#btnSubmit(type="submit") submit
+        input#inputBookTitle(type="text", placeholder="book title", name="title")
+        input#inputBookAuthor(type="text", placeholder="book author", name="author")
+        button#btnSubmit(type="submit") Create
     <a href ="/"> Go back </a>

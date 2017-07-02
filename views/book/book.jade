@@ -5,9 +5,16 @@ extends ../layout
 block content
     script(src='/javascripts/books.js')
 
-    h1= book.title
-    p Written by #{book.author}
+    form#formUpdateBook(name="updateBook",method="put",action="/books/#{book._id}")
+        div
+          label titre
+          input#inputBookTitle(type="text", value="#{book.title}", name="title")
+        div
+          label author
+          input#inputBookAuthor(type="text", value="#{book.author}", name="author")
+        button#btnSubmit(type="submit") update
+
+    div
+      button(onclick='deleteBook()', id='deleteBtn', value='#{book._id}') Delete
     div
       <a href ="/books/"> Go back </a>
-    div
-      button(onclick='deleteBook()', id='deleteBtn', value='#{book._id}') Test
