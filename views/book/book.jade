@@ -1,0 +1,13 @@
+extends ../layout
+
+
+
+block content
+    script(src='/javascripts/books.js')
+
+    h1= book.title
+    p Written by #{book.author}
+    div
+      <a href ="/books/"> Go back </a>
+    div
+      button(onclick='deleteBook()', id='deleteBtn', value='#{book._id}') Test

@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    h1= title
+    form#formAddBook(name="addbook",method="post",action="/books")
+        input#inputBookTitle(type="text", placeholder="book title", name="booktitle")
+        input#inputBookAuthor(type="text", placeholder="book author", name="bookauthor")
+        button#btnSubmit(type="submit") submit
+    <a href ="/"> Go back </a>
